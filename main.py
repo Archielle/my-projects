@@ -1,12 +1,19 @@
+# This is "tic tac toe" Python game. My first own project
+
+
+# Run. You'll see the start window. Click any 'Enter', then choose 'X' or 'O'.
 def start():
     nums = {1: '1', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7', 8: '8', 9: '9'}
     print(f'   |   |   \n {nums[7]} | {nums[8]} | {nums[9]} \n___|___|___')
     print(f'   |   |   \n {nums[4]} | {nums[5]} | {nums[6]} \n___|___|___')
     print(f'   |   |   \n {nums[1]} | {nums[2]} | {nums[3]} \n   |   |   ')
-    print('Это нумерация ячеек, выбирайте по очереди, куда хотите вставить ваш символ.\n Игрок 1 играет за крестики, а игрок 2 - за нолики.\nУспехов!')
+    print(
+        'Это нумерация ячеек, выбирайте по очереди, куда хотите вставить ваш символ.\n Игрок 1 играет за крестики, '
+        'а игрок 2 - за нолики.\nУспехов!')
     input('Наведите курсор на поле, кликните и...\nPress start!!!')
 
 
+# Func "board" prints your choice
 def board(choice, nums, player):
     if player == 'x' and nums[choice] == ' ':
         nums[choice] = 'x'
@@ -20,11 +27,10 @@ def board(choice, nums, player):
     print(f'   |   |   \n {nums[1]} | {nums[2]} | {nums[3]} \n   |   |   ')
 
 
+# Here you can see player's step check
 def step(nums, player):
-    choice = 0
-    all_choices = [1, 2, 3, 4 ,5 ,6 ,7, 8, 9]
     choice = int(input(f'Сейчас ход игрока {player}, введите число ячейки: \n'))
-    if choice in all_choices:
+    if choice in nums.keys():
         if nums[choice] == ' ':
             board(choice, nums, player)
         else:
@@ -35,7 +41,7 @@ def step(nums, player):
         step(nums, player)
 
 
-
+# Change player
 def players(player):
     if player == 'x':
         player = 'o'
@@ -46,7 +52,8 @@ def players(player):
     return player
 
 
-def end(nums, run): # Проверка всех вариантов выигрыша. У каждого игрока их может быть по 8 вариантов
+#  The anybody win
+def end(nums, run):  # Проверка всех вариантов выигрыша. У каждого игрока их может быть по 8 вариантов
     if nums[1] == 'x' and nums[2] == 'x' and nums[3] == 'x':
         print('Крестики победили!')
         run = False
@@ -95,9 +102,17 @@ def end(nums, run): # Проверка всех вариантов выигры�
     elif nums[7] == 'o' and nums[5] == 'o' and nums[3] == 'o':
         print('Нолики победили!')
         run = False
+    else:
+        chList = []
+        for check in nums.values():
+            chList.append(check)
+        if ' ' not in chList:
+            print('Ничья')
+            run = False
     return run
 
 
+# Choose your character
 def player_input(player):
     print('\n' * 2)
     player_choice = input('За кого хотите играть? Х или О?\nP.S. Раскладка клавиатуры должна быть на английском.\n')
@@ -113,6 +128,7 @@ def player_input(player):
 
 def main():
     nums = {1: ' ', 2: ' ', 3: ' ', 4: ' ', 5: ' ', 6: ' ', 7: ' ', 8: ' ', 9: ' ', }
+    check = ' '
     run = True
     player = ''
     start()
@@ -122,5 +138,6 @@ def main():
         step(nums, player)
         player = players(player)
         run = end(nums, run)
+
 
 main()
